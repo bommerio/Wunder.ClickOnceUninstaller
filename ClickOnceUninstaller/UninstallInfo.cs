@@ -26,6 +26,7 @@ namespace Wunder.ClickOnceUninstaller
                                    {
                                        Key = app,
                                        UninstallString = sub.GetValue("UninstallString") as string,
+                                       ShortcutAppId = sub.GetValue("ShortcutAppId") as string,
                                        ShortcutFolderName = sub.GetValue("ShortcutFolderName") as string,
                                        ShortcutSuiteName = sub.GetValue("ShortcutSuiteName") as string,
                                        ShortcutFileName = sub.GetValue("ShortcutFileName") as string,
@@ -42,6 +43,8 @@ namespace Wunder.ClickOnceUninstaller
         public string Key { get; set; }
 
         public string UninstallString { get; private set; }
+
+        public string ShortcutAppId { get; set; }
 
         public string ShortcutFolderName { get; set; }
 
