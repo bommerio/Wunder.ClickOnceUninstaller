@@ -40,6 +40,28 @@ namespace Wunder.ClickOnceUninstaller
             return null;
         }
 
+        public static UninstallInfo FindByShortcutAppId(string shortcutAppId) {
+            var uninstall = Registry.CurrentUser.OpenSubKey(UninstallRegistryPath);
+            if (uninstall != null) {
+                foreach (var app in uninstall.GetSubKeyNames()) {
+                    var sub = uninstall.OpenSubKey(app);
+                    if (sub != null && sub.GetValue("ShortcutAppId") as string == shortcutAppId) {
+                        return new UninstallInfo {
+                            Key = app,
+                            UninstallString = sub.GetValue("UninstallString") as string,
+                            ShortcutAppId = sub.GetValue("ShortcutAppId") as string,
+                            ShortcutFolderName = sub.GetValue("ShortcutFolderName") as string,
+                            ShortcutSuiteName = sub.GetValue("ShortcutSuiteName") as string,
+                            ShortcutFileName = sub.GetValue("ShortcutFileName") as string,
+                            SupportShortcutFileName = sub.GetValue("SupportShortcutFileName") as string,
+                            Version = sub.GetValue("DisplayVersion") as string
+                        };
+                    }
+                }
+            }
+
+            return null;
+        }
         public string Key { get; set; }
 
         public string UninstallString { get; private set; }
